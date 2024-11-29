@@ -668,3 +668,10 @@ def get_event_map():
         'proclaim': 'neutral',
         'announce': 'neutral',
     }
+
+book_list_agatha_christie = {
+        "The murder of Roger Ackroyd" : ["69087", "XXVII", "Full Novel", r"(Chapter\s+[IVXLCDM]+\n\n\w+(\s\w+)*\n\n)"],
+}
+
+def get_book_list_agatha_christie():
+    return book_list_agatha_christie
