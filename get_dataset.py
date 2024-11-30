@@ -3,6 +3,8 @@ import unidecode
 import requests
 from Book_module.Book import Book
 
+print("test")
+exit(0)
 text = ""
 
 with open("test.txt", "r") as f:
@@ -20,24 +22,33 @@ books = {
     "The Man in the Brown Suit" : ["61168", "novel", r"\n\n\s+(CHAPTER [IVXLCDM]+)\n\n", "Agatha Christie"],
     "The Secret of Chimneys" : ["65238", "novel", r"\n\n([0-9]+\s+.+?)\n\n", "Agatha Christie"],
     
-    
     "The Adventures of Sherlock Holmes" : ["1661", "short_stories", r"\n\n([IVXLCDM]+\.\s+.+?)\n\n", "Arthur Conan Doyle", r"\.(.*?)\n"],
     "A Study in Scarlet" : ["244", "novel", r"\n\n(CHAPTER\s+[IVXLCDM]+\.\n.+?)\n\n", "Arthur Conan Doyle"],
     "The Hound of the Baskervilles": ["2852", "novel", r"\n\n(Chapter\s+[0-9]+\.\n.+?)\n\n", "Arthur Conan Doyle"],
     "The Sign of the Four": ["2097", "novel", r"\n\n(Chapter\s+[IVXLCDM]+\n.+?)\n\n", "Arthur Conan Doyle"],
     "The Valley of Fear": ["3289","novel",r"\n\n(Chapter\s+[IVXLCDM]+\n.+?)\n\n","Arthur Conan Doyle"],
     "The Memoirs of Sherlock Holmes": ["834","short_stories",r"\n\n([IVXLCDM]+\..+?)\n\n","Arthur Conan Doyle", r"\.(.*?)\n"],
-    "The Return of Sherlock Holmes": ["108", "short_stories", r"\n\n(THE ADVENTURE OF .+?)\n\n","Arthur Conan Doyle", r"THE ADVENTURE OF .+?"],
+    "The Return of Sherlock Holmes": ["108", "short_stories", r"\n\n(THE ADVENTURE OF .+?)\n\n","Arthur Conan Doyle", r"(THE ADVENTURE OF .+?)\n"],
     "The Lost World" : ["139", "novel", r"(CHAPTER [IVXLCDM]+\n\n\s*.+?\n)", "Arthur Conan Doyle"],
     "His Last Bow: An Epilogue of Sherlock Holmes": ["2350", "short_stories", r"\n\n(The Adventure of Wisteria Lodge|The Adventure of the Bruce-Partington Plans|The Adventure of the Devil’s Foot|The Adventure of the Red Circle|The Disappearance of Lady Frances Carfax|The Adventure of the Dying Detective|His Last Bow: The War Service of Sherlock Holmes)\n\n","Arthur Conan Doyle", r"\n\n(.*?)\n\n"],
-    "The White Company" : ["903", "novel",r"\n\n(CHAPTER [IVXLCDM]+\. .+?)\n\n", "Arthur Conan Doyle"]
+    "The White Company" : ["903", "novel",r"\n\n(CHAPTER [IVXLCDM]+\. .+?)\n\n", "Arthur Conan Doyle"],
     
+    "The Extraordinary Adventures of Arsène Lupin, Gentleman-Burglar": ["6133", "short_stories", r"\n\n([IVXLCDM]+\..+?)\n\n", "Maurice Leblanc", r"\.(.*?)\n"],
+    "Arsène Lupin versus Herlock Sholmes": ["40203", "novel", r"\n\n(CHAPTER [IVXLCDM]+\.\n.+?)\n\n", "Maurice Leblanc"],
+    "The Hollow Needle; Further Adventures of Arsène Lupin": ["4017", "novel", r"\n\n(CHAPTER.+\n.+?)\n\n", "Maurice Leblanc"],
+    "The Confessions of Arsène Lupin": ["28093", "short_stories", r"\n\n([IVXLCDM]+\n\n.+?)\n\n", "Maurice Leblanc", r"[IVXLCDM]+\n\n(.+?)\n"],
+    "The Crystal Stopper": ["1563", "novel", r"\n\n(CHAPTER [IVXLCDM]+\.\n\n.+?)\n\n", "Maurice Leblanc"],
+    "The Teeth of the Tiger": ["13058", "novel", r"\n\n(CHAPTER .+\n\n.+?)\n\n", "Maurice Leblanc"],
+    "The Eight Strokes of the Clock": ["7896", "short_stories", r"\n\n([IVXLCDM]+\n\n.+?)\n\n", "Maurice Leblanc", r"[IVXLCDM]+\n\n(.+?)\n"],
+    "813": ["4018", "novel", r"\n\n(CHAPTER [IVXLCDM]+\n\n.+?)\n\n", "Maurice Leblanc"],
+    "The Golden Triangle: The Return of Arsène Lupin": ["34795", "novel", r"\n\n(CHAPTER [IVXLCDM]+\n\n.+?)\n\n", "Maurice Leblanc"]
 }
 
 text = unidecode.unidecode(text)
 text = text.replace("\r","")
 
-test = re.findall(r"\n\n(CHAPTER [IVXLCDM]+\. .+?)\n\n", text)
+pattern = r"\n\n(CHAPTER [IVXLCDM]+\n\n.+?)\n\n"
+# test = re.findall(pattern, text)
 
 # print(test)
 # exit(0)
@@ -110,7 +121,7 @@ def process_text(book_name: str, book_meta: list[str], text: str):
         # Remove remaining chapter headers
         for chapter in chapters[1:]:
             text = text.replace(chapter.group(0), "")
-
+        
         # Prepare the save file name
         save_file = book_name.lower().replace(" ", "_") + f"_[{book_meta[3].replace(" ", "+")}].txt"
         save_file = os.path.join("dataset", save_file)
@@ -135,7 +146,10 @@ def process_text(book_name: str, book_meta: list[str], text: str):
 
                 # Clean up the chapter title for the filename
                 # print(chapter.group(0))
+                # print(chapter)
                 chapter_title = re.findall(book_meta[4], str(chapter.group(0)))[0]
+                # print(chapter_title)
+                # continue
                 chapter_title = chapter_title.lower().strip(" ").replace(" ", "_") 
                 # print(chapter_title)
                 save_title = chapter_title + f"_[{book_meta[3].replace(" ", "+")}].txt"
@@ -164,24 +178,25 @@ def get_book(url:str):
     
     return response.text
 
-url = "https://www.gutenberg.org/files/"
+url = "https://www.gutenberg.org/cache/epub/"
 
 for file, meta in books.items():
     
-    # if file != "POIROT INVESTIGATES":
+    # if file != "The Eight Strokes of the Clock":
     #     continue
     
-    full_url = url + str(meta[0]) + "/" + str(meta[0]) + "-0.txt"
+    full_url = url + str(meta[0]) + "/pg" + str(meta[0]) + ".txt"
     text = get_book(full_url)
     if text == "":
         continue
     
     process_text(file, meta, text)
 
-book_list = []  
-for file in os.listdir("dataset"):
+# book_list = []  
+# for file in os.listdir("dataset"):
     
-    file_path = os.path.join("dataset", file)
-    book_list.append(Book(file_path))
-    print(file_path)
+#     file_path = os.path.join("dataset", file)
+#     book_list.append(Book(file_path))
+#     book_list[-1].pre_process()
+#     print(file_path)
 
