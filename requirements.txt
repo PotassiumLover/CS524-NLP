@@ -10,3 +10,5 @@ seaborn
 numpy
 tensorflow
 transformers
+datasets
+torch
