@@ -1,0 +1,12 @@
+beautifulsoup4
+spacy
+thinc
+nltk
+unidecode
+pandas
+scikit-learn
+matplotlib
+seaborn
+numpy
+tensorflow
+transformers
