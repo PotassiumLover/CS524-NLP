@@ -12,3 +12,4 @@ tensorflow
 transformers
 datasets
 torch
+optuna
