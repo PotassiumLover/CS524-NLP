@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-def create_dataset(books_dir='books', dataset_dir='dataset', output_csv='combined_dataset.csv'):
+def create_dataset(books_dir='books', dataset_dir='dataset', output_csv='text_to_authorship.csv'):
     texts = []
     labels = []
     
