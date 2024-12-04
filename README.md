@@ -23,7 +23,7 @@ A total of five notebooks were created, each representing a different model used
 * distilbert.ipynb uses the DistilBERT model
 * bayesian.ipynb uses the Bayesian model
 * random_forest.ipynb uses the Random Forest model
-* cnn.ipynb uses a convoltuional neural network model
+* cnn.ipynb uses a convolutional neural network model
 
 ## Project Instructions
 
@@ -44,7 +44,7 @@ The goal of this assignment is to design and implement a classifier using the pr
 
 #### Statistical Modeling:
 
-Different machine learning models were analyzed to produce a binary classification of stories that either were or were not written by G. K. Chesteron
+Different machine learning models were analyzed to produce a binary classification of stories that either were or were not written by G. K. Chesteron.
 * BERT
 * DistilBERT
 * Bayesian
@@ -53,4 +53,4 @@ Different machine learning models were analyzed to produce a binary classificati
 
 #### Evaluation
 
-* Classifier accuracies collected and compared to determine success of the implementation
+Classifier accuracies were collected and compared to determine success of the implementation.
