@@ -14,11 +14,11 @@
 2. Requires Jupyter Notebook environment
 3. Run build.sh to install all python requirements in requirements.txt and install spacy en_core_web_sm 
 
-If the build script does not work, install the pip packages manually with `pip install -r requirements.txt` and install spacy package with `python3 -m spacy download en_core_web_sm`
+If the build script does not work, install the pip packages manually with `pip install -r requirements.txt`.
 
 #### Running the project
 
-A total of five notebooks were created, each representing a different model used to train the classifier.
+A total of five model notebooks were created, each representing a different model used to train the classifier.
 * bert.ipynb uses the BERT model
 * distilbert.ipynb uses the DistilBERT model
 * bayesian.ipynb uses the Bayesian model
