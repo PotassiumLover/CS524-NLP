@@ -25,6 +25,8 @@ A total of five model notebooks were created, each representing a different mode
 * random_forest.ipynb uses the Random Forest model
 * cnn.ipynb uses a convolutional neural network model
 
+[Note] Some users had issues training the models in the jupyter notebook. If that is the case, run the bert.py script instead.
+
 ## Project Instructions
 
 ### Goals and the Task
